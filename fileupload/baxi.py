@@ -228,6 +228,266 @@ class Baxi():
         x = requests.get(url=url, headers=headers)
         return x.json()
 
+    def fetch_jamb_products(service_type):
+        url = f'{Baxi.base_url}exampins/products'
+        headers = {
+            'x-api-key': Baxi.api_key,
+            'Accept': Baxi.Accept,
+            'Content-Type': Baxi.Content_Type,
+        }
+        datum = {
+            'service_type': service_type
+        }
+        x = requests.post(url=url, headers=headers, data=json.dumps(datum))
+        return x.json()
+
+
+class AccessBank():
+    url = "https://api-sandbox.accessbankplc.com/openaccount/v1"
+    authorization = 'SNWeS39P9xOQUsyUI6aCYy=='
+    subscription_key = '0ddc8cf576594839a65d5a398b361a78'
+
+    def open_account(title, email):
+        base_url = f'{AccessBank.url}/CreateAccount'
+
+        if title == 'Mr':
+            gender = 'M'
+        else:
+            gender = 'F'
+
+        datum = {
+            "channelCode": "SANWOPAY",
+            "customerID": "",
+            "accountPurpose": "For Personal uses",
+            "bvn": "22188829172",
+            "title": "Mr.",
+            "firstName": "Olatunde",
+            "middleName": "Ade",
+            "lastName": "Adebowale",
+            "dateOfBirth": "1990-01-14",
+            "gender": "M",
+            "maritalStatus": "Married",
+            "email": "tundetest@gmail.com",
+            "phoneNumber1": "08038087624",
+            "birthCountry": "NG",
+            "placeOfbirth": "Lagos",
+            "nationality": "NG",
+            "religion": "Christianity",
+            "maidenName": "Adebayo",
+            "identificationType": "Driver's License",
+            "idIssueState": "Lagos",
+            "idIssueCountry": "NG",
+            "identificationNo": "A02383830",
+            "identityIssuedate": "2020-01-07",
+            "identityExpirydate": "2024-01-07",
+            "productCode": "020008",
+            "accountCcyCode": "NGN",
+            "accountBrCode": "014",
+            "profession": "Banking",
+            "annualIncome": "25000000",
+            "referralCode": "A007",
+            "staffID": "12338618",
+            "residentialAddressLine1": "NewBase Estate",
+            "residentialAddressLine2": "4 County Road",
+            "residentialAddressLine3": "Off Arobiodun Street",
+            "residentialAddressLine4": "Ogba, Lagos",
+            "permanentAddressLine1": "Blue Cross",
+            "permanentAddressLine2": "Saka Tinubu Street",
+            "permanentAddressLine3": "Victoria Island",
+            "permanentAddressLine4": "V.I, Lagos",
+            "lgaOfResidence": "Yaba",
+            "stateOfResidence": "Lagos State",
+            "streetOfResidence": "County Road",
+            "cityOfResidence": "Ogba",
+            "houseLandmark": "Ogba",
+            "pictureBase64": "",
+            "signatureBase64": "",
+            "imageBase64ID1": "",
+            "imageBase64ID2": "",
+            "imageBase64ID3": "",
+            "imageBase64ID4": "",
+            "imageBase64ID5": "",
+            "imageBase64ID6": "",
+            "refereeName1": "Sade Badmus",
+            "refereeMobileno1": "08037078000",
+            "refereeEmail1": "sadetest@yahoo.com",
+            "refereeName2": "Kunle Peters",
+            "refereeMobileno2": "08027770000",
+            "refereeEmail2": "peterstest@yahoo.com",
+            "needChequeBook": "Y",
+            'subcription-key': AccessBank.subscription_key,
+        }
+
+        headers = {
+            "Content-Type": "application/json",
+            'Authorization': AccessBank.authorization,
+            'Ocp-Apim-Subscription-Key': AccessBank.subscription_key,
+        }
+        response = requests.post(url=base_url, headers=headers, data=json.dumps(datum))
+
+        return response.json()
+
+
+def verifyNIN(nin, first_name, last_name):
+    url = "https://vapi.verifyme.ng/v1/verifications/identities/nin/" + nin
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgwOTAxLCJlbnYiOiJsaXZlIiwiaWF0IjoxNjIxMzQ0OTI1fQ.7FbuwOP7TiJxGYWgyt5PsBtaMN8M9jlfXOxw2s-H8YQ'
+    }
+    datum = {
+        "firstname": first_name,
+        "lastname": last_name
+    }
+    x = requests.post(url, data=json.dumps(datum), headers=headers)
+    if x.status_code == 201:
+        return x.json()
+    else:
+        results = {
+            "status": "error",
+            "message": x.json()["message"]
+        }
+        return results
+
+
+class Dojah():
+
+    base_url = 'https://sandbox.dojah.io/'
+    live_url = 'https://api.dojah.io/'
+    app_id = '628387965dfa1d003411c89b'
+    secret_key = 'prod_sk_ynExQplYBSoEYMYfvWzWnSw0U'
+
+    def verify_bvn(bvn):
+        url = f'{Dojah.base_url}api/v1/kyc/bvn/full?bvn={bvn}'
+        headers = {
+            'Accept': 'text/plain',
+            'AppId': Dojah.app_id,
+            'Authorization': Dojah.secret_key,
+        }
+        response = requests.get(url, headers=headers)
+        return response.json()
+
+    def verify_nin(nin):
+        url = f'{Dojah.base_url}api/v1/kyc/nin?nin={nin}'
+        headers = {
+            'Accept': 'text/plain',
+            'AppId': Dojah.app_id,
+            'Authorization': Dojah.secret_key,
+        }
+        response = requests.get(url, headers=headers)
+        return response.json()
+
+
+print(Dojah.verify_nin(nin='89244161044'))
+
+
+# print(AccessBank.open_account(title='Mr', email='click2bundi@gmail.com'))
+
+
+# data = verifyNIN(nin='89244161044', first_name='Caleb', last_name='Pedro')
+# print(data)
+
+
+
+# title = "title"
+# email = 'email'
+# gender = 'gender'
+# for_class = {
+#     "channelCode": "SANWOPAY",
+#     "accountPurpose": "For Personal uses",
+#     "bvn": data['bvn'],
+#     "title": title,
+#     "firstName": data['first_name'],
+#     "middleName": data['middle_name'],
+#     "lastName": data['lastname'],
+#     "dateOfBirth": data['date_of_birth'],
+#     "gender": gender,
+#     "maritalStatus": data["marital_status"],
+#     "email": email,
+#     "phoneNumber1": data['phone_number1'],
+#     "nationality": "NG",
+#     "stateOfResidence": data['state_of_residence']
+# }
+
+
+params = {
+    'bvn': '22444225463',
+    'first_name': 'Jack',
+    'middle_name': 'Hendricks',
+    'lastname': 'Alphonso',
+    'date_of_birth': '25-May-1989',
+    'marital_status': 'single',
+    'phone_number1': '08139021881',
+    'state_of_residence': 'lagos'
+}
+params2 = {
+    "channelCode": "TESTAPP",
+    "customerID": "",
+    "accountPurpose": "For Personal uses",
+    "bvn": "22188829172",
+    "title": "Mr.",
+    "firstName": "Olatunde",
+    "middleName": "Ade",
+    "lastName": "Adebowale",
+    "dateOfBirth": "1990-01-14",
+    "gender": "M",
+    "maritalStatus": "Married",
+    "email": "tundetest@gmail.com",
+    "phoneNumber1": "08037077625",
+    "birthCountry": "NG",
+    "placeOfbirth": "Lagos",
+    "nationality": "NG",
+    "religion": "Christianity",
+    "maidenName": "Adebayo",
+    "identificationType": "Driver's License",
+    "idIssueState": "Lagos",
+    "idIssueCountry": "NG",
+    "identificationNo": "A02383830",
+    "identityIssuedate": "2020-01-07",
+    "identityExpirydate": "2024-01-07",
+    "productCode": "020008",
+    "accountCcyCode": "NGN",
+    "accountBrCode": "014",
+    "profession": "Banking",
+    "annualIncome": "25000000",
+    "referralCode": "A007",
+    "staffID": "12338618",
+    "residentialAddressLine1": "NewBase Estate",
+    "residentialAddressLine2": "4 County Road",
+    "residentialAddressLine3": "Off Arobiodun Street",
+    "residentialAddressLine4": "Ogba, Lagos",
+    "permanentAddressLine1": "Blue Cross",
+    "permanentAddressLine2": "Saka Tinubu Street",
+    "permanentAddressLine3": "Victoria Island",
+    "permanentAddressLine4": "V.I, Lagos",
+    "lgaOfResidence": "Yaba",
+    "stateOfResidence": "Lagos State",
+    "streetOfResidence": "County Road",
+    "cityOfResidence": "Ogba",
+    "houseLandmark": "Ogba",
+    "pictureBase64": "",
+    "signatureBase64": "",
+    "imageBase64ID1": "",
+    "imageBase64ID2": "",
+    "imageBase64ID3": "",
+    "imageBase64ID4": "",
+    "imageBase64ID5": "",
+    "imageBase64ID6": "",
+    "refereeName1": "Sade Badmus",
+    "refereeMobileno1": "08037078000",
+    "refereeEmail1": "sadetest@yahoo.com",
+    "refereeName2": "Kunle Peters",
+    "refereeMobileno2": "08027770000",
+    "refereeEmail2": "peterstest@yahoo.com",
+    "needChequeBook": "Y"
+}
+#account = AccessBank.open_account(
+#    title='Mr',
+#    email='codebundi@gmail.com'
+#)
+#print(account)
+# jamb = Baxi.fetch_jamb_products(service_type='jamb')
+# print(jamb)
+
 
 category = 'Airtime Recharge'
 service_type = 'mtn'
@@ -246,10 +506,10 @@ Startimes = '02110144711'
 # print(Baxi.get_airtime_recharge_providers(self='self'))
 # print(Baxi.get_databundle_providers(self='self'))
 # print(time)
-print(Baxi.get_e_pin_service_providers(self='self'))
+# print(Baxi.get_e_pin_service_providers(self='self'))
 n = datetime.datetime.now(datetime.timezone.utc)
 n.isoformat()
-print(n)
+# print(n)
 
 
 # print(Baxi.retrieve_provider_bundles(service_type))
@@ -261,10 +521,11 @@ print(n)
 #    amount=amount,
 #    phone=phone
 #))
-# print(Baxi.account_name_validation(account_number=DSTV, service_type='dstv'))
-print(Baxi.retrieve_provider_bouquets(service_type='dstv'))
-print('break')
-print(Baxi.retrieve_provider_addons(service_type='dstv', product_code='PRWFRNSE36'))
+# verify = Baxi.account_name_validation(account_number=DSTV, service_type='dstv')
+# print(verify['status'])
+# print(Baxi.retrieve_provider_bouquets(service_type='dstv'))
+# print('break')
+# print(Baxi.retrieve_provider_addons(service_type='dstv', product_code='PRWFRNSE36'))
 
 # data = {
 #        'status': 'success',

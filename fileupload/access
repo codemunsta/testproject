@@ -1,0 +1,22 @@
+{"response_code":"99","response_message":"Ops Error Creating Account Number - ","requestTrackNo":"SWP500350962858974E1","reference_platform":"FLEXCUBE\/STR","accountno_created":"","bo_appnumber":"","bo_appuid":"","response_time":"07-06-2022 11:40:55"}
+{'response_code': '99', 'response_message': 'Ops Error Creating Account Number - ', 'requestTrackNo': 'SWP500350962858974E1', 'reference_platform': 'FLEXCUBE/STR', 'accountno_created': '', 'bo_appnumber': '', 'bo_appuid': '', 'response_time': '07-06-2022 11:40:55'}
+ {"response_code":"99","response_message":"Ops Error Creating Account Number - ","requestTrackNo":"SWP500350962858974E1","reference_platform":"FLEXCUBE\/STR","accountno_created":"","bo_appnumber":"","bo_appuid":"","response_time":"07-06-2022 11:40:55"}
+{'response_code': '99', 'response_message': 'Ops Error Creating Account Number - ', 'requestTrackNo': 'SWP500350962858974E1', 'reference_platform': 'FLEXCUBE/STR', 'accountno_created': '', 'bo_appnumber': '', 'bo_appuid': '', 'response_time': '07-06-2022 11:40:55'}
+{'response_code': '66', 'response_message': 'Customer has an existing INSTANT SAVINGS TIER 1 ', 'response_time': '07-06-2022 12:07:32'}
+
+{
+    "status": true,
+    "message": "Virtual nuban fetched",
+    "data": {
+        "dc_ref": "DC_H9Gjh4Auvq3",
+        "order_ref": "URF_1654765795971_3551335",
+        "account_number": "8227080950",
+        "account_status": "ACTIVE",
+        "frequency": "N/A",
+        "bank_name": "Sterling BANK",
+        "created_at": "2022-06-09 10:10:02",
+        "expiry_date": "N/A",
+        "note": "Please make a bank transfer to Caleb Pedro  FLW",
+        "amount": "NaN"
+    }
+}
